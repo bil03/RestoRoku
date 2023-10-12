@@ -11,8 +11,7 @@ Terima notifikasi otomatis ketika stok mendekati ambang batas.
 3. Analisis Data
 Lihat laporan dan analisis yang membantu Anda mengoptimalkan persediaan.
 Identifikasi tren, kebutuhan pelanggan, dan peluang peningkatan.
-4. Integrasi dengan POS (Point of Sale)
-Sambungkan Restoroku dengan sistem POS Anda untuk mengelola persediaan lebih efisien.
+
 Cara Menggunakan
 Untuk memulai dengan Restoroku, Anda perlu mengikuti langkah-langkah berikut:
 
@@ -23,7 +22,7 @@ Konfigurasi
 Konfigurasi Restoroku dengan mengatur informasi toko, barang, dan preferensi Anda.
 
 Tambahkan Barang
-Tambahkan barang-barang ke katalog Anda dengan mengisi informasi seperti nama, harga, dan jumlah stok.
+Tambahkan barang-barang ke katalog Anda dengan mengisi informasi seperti nama, satuan, dan jumlah stok.
 
 Pemantauan Persediaan
 Pantau persediaan Anda dan terima notifikasi jika stok barang mendekati batas minimum.
@@ -32,7 +31,7 @@ Analisis Data
 Gunakan alat analisis kami untuk mengoptimalkan persediaan dan mengidentifikasi peluang bisnis.
 
 Kontribusi
-Kami sangat menghargai kontribusi dari komunitas! Jika Anda ingin berkontribusi pada pengembangan Restoroku, harap ikuti panduan kami dalam CONTRIBUTING.md.
+Kami sangat menghargai kontribusi dari komunitas! Jika Anda ingin berkontribusi pada pengembangan Restoroku, harap ikuti panduan kami dalam
 
 Lisensi
 Proyek ini dilisensikan di bawah Lisensi MIT.

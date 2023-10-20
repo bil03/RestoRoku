@@ -1,10 +1,10 @@
 <?php
-    require 'function.php';
-    require 'cek.php'
+    require '../function.php';
+    require '../cek.php'
 ?>
 <html>
 <head>
-  <title>Stock Barang</title>
+  <title>Laporan Barang Masuk</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -16,46 +16,47 @@
 </head>
 
 <body>
-<div class="container">
-			<h2>Stock Bahan</h2>
-			<h4>(Inventory)</h4>
-				<div class="data-tables datatable-dark">
-                    <table id="mauexport">
-                        <thead>
-                            <tr>
-                                <th>no</th>
-                                <th>nama barang</th>
-                                <th>satuan</th>
-                                <th>stock</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM stock");
-                            $i = 1;
-                            while ($data=mysqli_fetch_array($ambilsemuadatastock)){
-                                $namabarang = $data['namabarang'];
-                                $satuan = $data['satuan'];
-                                $stock = $data['stock'];
-                                $idb = $data['idbarang'];
-                            
-                            ?>
-                            <tr>
-                                <td><?=$i++;?></td>
-                                <td><?php echo $namabarang;?></td>
-                                <td><?php echo $satuan;?></td>
-                                <td><?php echo $stock;?></td>
-                            </tr>
+    <div class="container">
+		<h2>Barang Masuk</h2>
+		<div class="data-tables datatable-dark">
+            <table id="mauexport">
+                <thead>
+                    <tr>
+                        <th>tanggal</th>
+                        <th>nama barang</th>
+                        <th>keterangan</th>
+                        <th>jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM masuk m, stock s WHERE s.idbarang = m.idbarang");
+                    $i = 1;
+                    while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                        $tanggal = $data['tanggal'];
+                        $namabarang = $data['namabarang'];
+                        $qty = $data['qty'];
+                        $keterangan = $data['keterangan'];
+                        $idb = $data['idbarang'];
+                        $idm = $data['idmasuk'];
+                    
+                    ?>
+                    <tr>
+                        <td><?=$tanggal;?></td>
+                        <td><?=$namabarang;?></td>
+                        <td><?=$keterangan?></td>
+                        <td><?=$qty;?></td>
+                    </tr>
 
-                            <?php
-                            };
+                    <?php
+                    };
 
-                            ?>
+                    ?>
 
-                        </tbody>
-                    </table>
-				</div>
-</div>
+                </tbody>
+            </table>
+		</div>
+    </div>
 	
 <script>
 $(document).ready(function() {

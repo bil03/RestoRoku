@@ -56,10 +56,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 users
                             </a>
-                            <a class="nav-link" href="laporan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Laporan Barang
-                            </a>
                         </div>
                     </div>
                 </nav>
@@ -74,6 +70,9 @@
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
                                     Tambah Barang
                                 </button>
+                                <a type="button" class="btn btn-info" href="../laporan/keluar.php">
+                                    export Data
+                                </a>
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -86,9 +85,8 @@
                                             <th>aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        
-                                    <?php
+                                    <tbody>    
+                                        <?php
                                         $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
                                         while ($data=mysqli_fetch_array($ambilsemuadatastock)){
                                             $tanggal = $data['tanggal'];
@@ -174,7 +172,7 @@
 
                                     </tbody>
                                 </table>
-                            </div
+                            </div>
                         </div>
                     </div>
                     </div>

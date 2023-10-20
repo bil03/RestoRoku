@@ -56,10 +56,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 users
                             </a>
-                            <a class="nav-link" href="laporan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Laporan Barang
-                            </a>
                         </div>
                     </div>
                 </nav>

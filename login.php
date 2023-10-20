@@ -13,18 +13,36 @@
         $hitung = mysqli_num_rows($cekdatabase); 
 
         if ($hitung > 0){
-            $_SESSION['log'] = 'true';
-            header("location: index.php");
+            $ambildatarole = mysqli_fetch_array($cekdatabase);
+            $role = $ambildatarole['role'];
+
+            if ($role == 'admin'){
+                $_SESSION['log'] = 'true';
+                $_SESSION['role'] = 'admin';
+                header("location: admin");
+            }
+            else if ($role == 'user'){
+                $_SESSION['log'] = 'true';
+                $_SESSION['role'] = 'user';
+                header("location: user");
+            } else if ($role == 'pimpinan'){
+                $_SESSION['log'] = 'true';
+                $_SESSION['role'] = 'pimpinan';
+                header("location: pimpinan");
+            }
+            else{
+                header("location: login.php");
+            }
         } else {
             header("location: login.php");   
         }
     }
 
-    if (!isset($_SESSION['log'])) {
+    // if (!isset($_SESSION['log'])) {
 
-    }else {
-        header("location: index.php");
-    }
+    // }else {
+    //     header("location: index.php");
+    // }
     
 ?>
 

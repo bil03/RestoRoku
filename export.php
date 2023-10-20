@@ -62,7 +62,7 @@ $(document).ready(function() {
     $('#mauexport').DataTable( {
         dom: 'Bfrtip',
         buttons: [
-            'excel', 'pdf', 'print'
+             'print'
         ]
     } );
 } );

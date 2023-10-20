@@ -1,6 +1,6 @@
 <?php
-    require 'function.php';
-    require 'cek.php'
+    require '../function.php';
+    require '../cek.php'
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@
         <meta name="author" content="" />
         <title>Barang Masuk</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
@@ -30,7 +30,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
-                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                        <li><a class="dropdown-item" href="../logout.php">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -56,6 +56,10 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 users
                             </a>
+                            <a class="nav-link" href="laporan.php">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Laporan Barang
+                            </a>
                         </div>
                     </div>
                 </nav>
@@ -64,7 +68,7 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">barang masuk</h1>
+                            <h1 class="mt-4">barang keluar</h1>
                         <div class="card mb-4">
                             <div class="card-header">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
@@ -77,42 +81,42 @@
                                         <tr>
                                             <th>tanggal</th>
                                             <th>nama barang</th>
-                                            <th>keterangan</th>
+                                            <th>penerima</th>
                                             <th>jumlah</th>
                                             <th>aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM masuk m, stock s WHERE s.idbarang = m.idbarang");
-                                        $i = 1;
+                                        
+                                    <?php
+                                        $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
                                         while ($data=mysqli_fetch_array($ambilsemuadatastock)){
                                             $tanggal = $data['tanggal'];
                                             $namabarang = $data['namabarang'];
                                             $qty = $data['qty'];
-                                            $keterangan = $data['keterangan'];
+                                            $penerima = $data['penerima'];
                                             $idb = $data['idbarang'];
-                                            $idm = $data['idmasuk'];
+                                            $idk = $data['idkeluar'];
                                         
                                         ?>
                                         <tr>
                                             <td><?=$tanggal;?></td>
                                             <td><?=$namabarang;?></td>
-                                            <td><?=$keterangan?></td>
+                                            <td><?=$penerima?></td>
                                             <td><?=$qty;?></td>
                                             <td>
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?=$idm;?>">
+                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?=$idk;?>">
                                                     Edit
                                                 </button>
                                                 <input type="hidden" name="idbarangygmaudihapus" valuee="<?=$idb;?>">
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?=$idm;?>">
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?=$idk;?>">
                                                     Delete
                                                 </button>
                                             </td>
                                         </tr>
 
                                         <!-- edit Modal -->
-                                        <div class="modal fade" id="edit<?=$idm;?>">
+                                        <div class="modal fade" id="edit<?=$idk;?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <!-- Modal Header -->
@@ -124,13 +128,13 @@
                                                     <!-- Modal body -->
                                                     <form method="post">
                                                     <div class="modal-body">
-                                                        <input type="text" name="keterangan" value="<?=$keterangan;?>" class="form-control" Required>
+                                                        <input type="text" name="penerima" value="<?=$penerima;?>" class="form-control" Required>
                                                         <br/>
                                                         <input type="number" name="qty" value="<?=$qty;?>" class="form-control" Required>
                                                         <br/>
                                                         <input type="hidden" name="idb" value="<?=$idb?>">
-                                                        <input type="hidden" name="idm" value="<?=$idm?>">
-                                                        <button type="submit" class="btn btn-primary" name="updatebarangmasuk">edit</button>
+                                                        <input type="hidden" name="idk" value="<?=$idk?>">
+                                                        <button type="submit" class="btn btn-primary" name="updatebarangkeluar">edit</button>
                                                     </div>
                                                     </form>
 
@@ -139,7 +143,7 @@
                                         </div>
 
                                         <!-- delete Modal -->
-                                        <div class="modal fade" id="delete<?=$idm;?>">
+                                        <div class="modal fade" id="delete<?=$idk;?>">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
                                                     <!-- Modal Header -->
@@ -154,10 +158,10 @@
                                                         Apakah anda yakin ingin menghapus <?=$namabarang;?> ?
                                                         <input type="hidden" name="idb" value="<?=$idb?>">
                                                         <input type="hidden" name="kty" value="<?=$qty?>">
-                                                        <input type="hidden" name="idm" value="<?=$idm?>">
+                                                        <input type="hidden" name="idk" value="<?=$idk?>">
                                                         <br/>
                                                         <br/>
-                                                        <button type="submit" class="btn btn-danger" name="hapusbarangmasuk">hapus</button>
+                                                        <button type="submit" class="btn btn-danger" name="hapusbarangkeluar">hapus</button>
                                                     </div>
                                                     </form>
 
@@ -166,12 +170,11 @@
                                         </div>
                                         <?php
                                         };
-
                                         ?>
 
                                     </tbody>
                                 </table>
-                            </div>
+                            </div
                         </div>
                     </div>
                     </div>
@@ -186,12 +189,12 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="../js/scripts.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
         <script src="assets/demo/chart-area-demo.js"></script>
         <script src="assets/demo/chart-bar-demo.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-        <script src="js/datatables-simple-demo.js"></script>
+        <script src="../js/datatables-simple-demo.js"></script>
     </body>
 
     <!-- The Modal -->
@@ -200,7 +203,7 @@
         <div class="modal-content">
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">tambah barang masuk</h4>
+                <h4 class="modal-title">tambah barang keluar</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -220,9 +223,9 @@
                 <br/>
                 <input type="number" placeholder="Quantity" name="qty" class="form-control" Required>
                 <br/>
-                <input type="text" name="keterangan" placeholder="keterangan" class="form-control" Required>
+                <input type="text" name="penerima" placeholder="penerima" class="form-control" Required>
                 <br/>
-                <button type="submit" class="btn btn-primary" name="barangmasuk">Submit</button>
+                <button type="submit" class="btn btn-primary" name="barangkeluar">Submit</button>
             </div>
             </form>
 

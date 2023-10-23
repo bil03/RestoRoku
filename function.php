@@ -176,12 +176,14 @@
         $idb = $_POST['idb'];
         $idk = $_POST['idk'];
         $penerima = $_POST['penerima'];
-        $qty = $_POST['qty'];
+        $qty = $_POST['qty']; //qty inputan user
 
+        //stock saat ini
         $lihatstock = mysqli_query($conn, "SELECT * FROM stock WHERE idbarang='$idb'");
         $stocknya = mysqli_fetch_array($lihatstock); 
         $stockskrg = $stocknya['stock'];
 
+        //qty barang keluar 
         $qtyskrng = mysqli_query($conn, "SELECT * FROM keluar WHERE idkeluar='$idk'");
         $qtynya = mysqli_fetch_array($qtyskrng);
         $qtyskrng = $qtynya['qty'];
@@ -189,13 +191,23 @@
         if ($qty>$qtyskrng){
             $selisih = $qty - $qtyskrng;
             $kurangin = $stockskrg - $selisih;
-            $kuranginstocknya = mysqli_query($conn, "UPDATE stock SET stock ='$kurangin' WHERE idbarang='$idb'");
-            $updatenya = mysqli_query($conn, "UPDATE keluar SET qty='$qty', penerima='$penerima' WHERE idkeluar='$idk'"); 
-            if ($kuranginstocknya && $updatenya){
-                header('location:keluar.php');
-            } else {
-                echo 'gagal';
-                header('location:keluar.php');
+
+            if ($selisih <= $stockskrg){
+                $kuranginstocknya = mysqli_query($conn, "UPDATE stock SET stock ='$kurangin' WHERE idbarang='$idb'");
+                $updatenya = mysqli_query($conn, "UPDATE keluar SET qty='$qty', penerima='$penerima' WHERE idkeluar='$idk'"); 
+                if ($kuranginstocknya && $updatenya){
+                    header('location:keluar.php');
+                } else {
+                    echo 'gagal';
+                    header('location:keluar.php');
+                }
+            }else {
+                echo '
+                    <script>
+                        alert("Stock saat ini tidak mencukupi");
+                        window.location = "keluar.php";
+                    </script>
+                ';
             }
         }else {
             $selisih = $qtyskrng - $qty;

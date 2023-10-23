@@ -1,6 +1,6 @@
 <?php
     require '../function.php';
-    require '../cek.php'
+    require '../cek.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Laporan barang</title>
+        <title>RestoRoku</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
         <link href="../css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -52,14 +52,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Barang Keluar
                             </a>
-                            <a class="nav-link" href="users.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                users
-                            </a>
-                            <a class="nav-link" href="laporan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Laporan Barang
-                            </a>
                         </div>
                     </div>
                 </nav>
@@ -68,97 +60,51 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">Kelola User</h1>
+                            <h1 class="mt-4">stock barang</h1>
                         <div class="card mb-4">
-                            <div class="card-header">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                    Tambah Users
-                                </button>
-                            </div>
                             <div class="card-body">
+                            <?php
+                                $ambildatastock = mysqli_query($conn, "SELECT * FROM stock WHERE stock < 5");
+                                while($data=mysqli_fetch_array($ambildatastock)){
+                                    $barang = $data['namabarang'];
+                                    $stock = $data['stock'];
+                                
+                            ?>
+                                <div class="alert alert-danger alert-dismissible">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                    <strong>Perhatian!</strong> stock Barang <?=$barang;?> akan segera habis
+                                </div>
+
+                            <?php
+                                }
+                            ?>
                                 <table id="datatablesSimple">
                                     <thead>
                                         <tr>
                                             <th>no</th>
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>aksi</th>
+                                            <th>nama barang</th>
+                                            <th>satuan</th>
+                                            <th>stock</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $datalogin = mysqli_query($conn, "SELECT * FROM login");
+                                        $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM stock");
                                         $i = 1;
-                                        while ($data=mysqli_fetch_array($datalogin)){
-                                            $em = $data['email'];
-                                            $iduser = $data['iduser'];
-                                            $role = $data['role'];
-                                            $pw = $data['password'];
+                                        while ($data=mysqli_fetch_array($ambilsemuadatastock)){
+                                            $namabarang = $data['namabarang'];
+                                            $satuan = $data['satuan'];
+                                            $stock = $data['stock'];
+                                            $idb = $data['idbarang'];
                                         
                                         ?>
                                         <tr>
                                             <td><?=$i++;?></td>
-                                            <td><?=$em;?></td>
-                                            <td><?=$role;?></td>
-                                            <td>
-                                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#edit<?=$iduser;?>">
-                                                    Edit
-                                                </button>
-                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete<?=$iduser;?>">
-                                                    Delete
-                                                </button>
-                                            </td>
+                                            <td><?=$namabarang;?></td>
+                                            <td><?=$satuan;?></td>
+                                            <td><?=$stock;?></td>
                                         </tr>
 
-                                        <!-- edit Modal -->
-                                        <div class="modal fade" id="edit<?=$iduser;?>">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">edit User?</h4>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-                                                    
-                                                    <form method="post">
-                                                    <div class="modal-body">
-                                                        <input type="email" name="emailuser" value="<?=$em;?>" class="form-control" placeholder= "Email" Required>
-                                                        <br/>
-                                                        <input type="password" name="passwordbaru" class="form-control" value="<?=$pw;?>" placeholder= "Password">
-                                                        <br/>
-                                                        <input type="hidden" name="id" value="<?=$iduser?>">
-                                                        <button type="submit" class="btn btn-primary" name="updateuser">edit</button>
-                                                    </div>
-                                                    </form>
-
-                                                </div>        
-                                            </div>
-                                        </div>
-
-                                        <!-- delete Modal -->
-                                        <div class="modal fade" id="delete<?=$iduser;?>">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    
-                                                    <div class="modal-header">
-                                                        <h4 class="modal-title">hapus barang?</h4>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                    </div>
-
-                                                    
-                                                    <form method="post">
-                                                    <div class="modal-body">
-                                                        Apakah anda yakin ingin menghapus <?=$em;?> ?
-                                                        <input type="hidden" name="id" value="<?=$iduser?>">
-                                                        <br/>
-                                                        <br/>
-                                                        <button type="submit" class="btn btn-danger" name="hapususer">hapus</button>
-                                                    </div>
-                                                    </form>
-
-                                                </div>        
-                                            </div>
-                                        </div>
                                         <?php
                                         };
 
@@ -188,32 +134,4 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="../js/datatables-simple-demo.js"></script>
     </body>
-
-    <!-- The Modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">tambah user</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <form method="post">
-            <div class="modal-body">
-                <input type="email" name="email" placeholder="Email" class="form-control" Required>
-                <br/>
-                <input type="password" name="password" placeholder="Password" class="form-control" Required>
-                <br/>
-                <input type="text" placeholder="role" name="role" placeholder="role" class="form-control" Required>
-                <br/>
-                <button type="submit" class="btn btn-primary" name="adduser">Submit</button>
-            </div>
-            </form>
-
-        </div>        
-    </div>
-</div>
-
 </html>

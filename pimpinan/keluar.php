@@ -52,10 +52,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Barang Keluar
                             </a>
-                            <a class="nav-link" href="laporan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Laporan Barang
-                            </a>
                         </div>
                     </div>
                 </nav>
@@ -66,11 +62,6 @@
                         <div class="container-fluid px-4">
                             <h1 class="mt-4">barang keluar</h1>
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                        Tambah Barang
-                                    </button>
-                                </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
                                         <thead>

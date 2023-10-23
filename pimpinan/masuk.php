@@ -52,10 +52,6 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                 Barang Keluar
                             </a>
-                            <a class="nav-link" href="laporan.php">
-                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Laporan Barang
-                            </a>
                         </div>
                     </div>
                 </nav>
@@ -64,45 +60,41 @@
                 <main>
                     <div class="container-fluid px-4">
                         <div class="container-fluid px-4">
-                            <h1 class="mt-4">barang keluar</h1>
+                            <h1 class="mt-4">barang masuk</h1>
                             <div class="card mb-4">
-                                <div class="card-header">
-                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
-                                        Tambah Barang
-                                    </button>
-                                </div>
                                 <div class="card-body">
                                     <table id="datatablesSimple">
                                         <thead>
                                             <tr>
                                                 <th>tanggal</th>
                                                 <th>nama barang</th>
-                                                <th>penerima</th>
+                                                <th>keterangan</th>
                                                 <th>jumlah</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
-                                        <?php
-                                            $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM keluar k, stock s WHERE s.idbarang = k.idbarang");
+                                            <?php
+                                            $ambilsemuadatastock = mysqli_query($conn, "SELECT * FROM masuk m, stock s WHERE s.idbarang = m.idbarang");
+                                            $i = 1;
                                             while ($data=mysqli_fetch_array($ambilsemuadatastock)){
                                                 $tanggal = $data['tanggal'];
                                                 $namabarang = $data['namabarang'];
                                                 $qty = $data['qty'];
-                                                $penerima = $data['penerima'];
+                                                $keterangan = $data['keterangan'];
                                                 $idb = $data['idbarang'];
-                                                $idk = $data['idkeluar'];
+                                                $idm = $data['idmasuk'];
                                             
                                             ?>
                                             <tr>
                                                 <td><?=$tanggal;?></td>
                                                 <td><?=$namabarang;?></td>
-                                                <td><?=$penerima?></td>
+                                                <td><?=$keterangan?></td>
                                                 <td><?=$qty;?></td>
                                             </tr>
 
                                             <?php
                                             };
+
                                             ?>
 
                                         </tbody>
@@ -129,40 +121,4 @@
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
         <script src="../js/datatables-simple-demo.js"></script>
     </body>
-
-    <!-- The Modal -->
-<div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">tambah barang keluar</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <!-- Modal body -->
-            <form method="post">
-            <div class="modal-body">
-                <select name="barangnya" class="form-control">
-                    <?php 
-                        $ambilsemuadatanya = mysqli_query($conn, "SELECT * FROM stock");
-                        while($fetcharray = mysqli_fetch_array($ambilsemuadatanya)){
-                            $namabarangnya = $fetcharray['namabarang'];
-                            $idbarangnya = $fetcharray['idbarang'];
-                            echo "<option value='$idbarangnya'>$namabarangnya </option>";
-                        }
-                    ?>
-                </select>
-                <br/>
-                <input type="number" placeholder="Quantity" name="qty" class="form-control" Required>
-                <br/>
-                <input type="text" name="penerima" placeholder="penerima" class="form-control" Required>
-                <br/>
-                <button type="submit" class="btn btn-primary" name="barangkeluar">Submit</button>
-            </div>
-            </form>
-
-        </div>        
-    </div>
-</div>
 </html>
